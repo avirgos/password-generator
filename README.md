@@ -2,7 +2,7 @@
 
 Script which generates one or multiple random passwords.
 
-In the multiple random passwords mode, passwords generated are stored in a protected .csv file readable and writable only by you.
+In the multiple random passwords mode, passwords generated are stored in a protected ```.csv``` file readable and writable only by you.
 
 The password must contain, at least, one uppercase letter, one lowercase letter, one number and one special character.
 
@@ -21,7 +21,7 @@ The password must contain, at least, one uppercase letter, one lowercase letter,
 
 ## Example of use
 
-![password-generator](img/password-generator.png)
+![password-generator](assets/password-generator.png)
 
 ## References
 
