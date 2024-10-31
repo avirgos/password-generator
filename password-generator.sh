@@ -49,7 +49,7 @@ BLUE='\033[0;34m'
 #   mode selected.
 ######################################################################
 function generate() {
-    if test "${ARGUMENTS_PASSWORD_GENERATE}" = "-g" && test "${ARGUMENTS_NUMBER}" -eq 1
+    if [[ "${ARGUMENTS_PASSWORD_GENERATE}" = "-g" && "${ARGUMENTS_NUMBER}" -eq 1 ]]
     then
         echo "
         -----------------------------------
@@ -58,10 +58,9 @@ function generate() {
         |                                 |
         -----------------------------------
         "
-
         one_password
-    elif test "${ARGUMENTS_PASSWORD_NUMBER}" -ge "${ARGUMENTS_PASSWORD_MIN_NUMBER}" > /dev/null 2>&1 &&
-        test "${ARGUMENTS_PASSWORD_NUMBER}" -le "${ARGUMENTS_PASSWORD_MAX_NUMBER}" > /dev/null 2>&1 
+    elif [[ "${ARGUMENTS_PASSWORD_NUMBER}" -ge "${ARGUMENTS_PASSWORD_MIN_NUMBER}" ]] && 
+         [[ "${ARGUMENTS_PASSWORD_NUMBER}" -le "${ARGUMENTS_PASSWORD_MAX_NUMBER}" ]]
     then
         # file parameters
         local file_name=generated-"$(date +%F)"
@@ -71,22 +70,20 @@ function generate() {
         local file_number=1
 
         # create the directory to store random passwords files generated
-        if ! test -e "${file_directory}"
+        if [[ ! -e "${file_directory}" ]]
         then
             mkdir "${file_directory}"
         fi
 
         # create random passwords file
-        if test -e "${file_name_and_extension}" || test -s "${file_name_and_extension}" && test -f "${file_name_and_extension}"
+        if [[ -e "${file_name_and_extension}" || -s "${file_name_and_extension}" && -f "${file_name_and_extension}" ]]
         then
-            file_name_and_extension="${file_name}"-"${file_number}"."${file_extension}" # generated-<date>-<number>
-
-            while test -e "${file_name_and_extension}" && test -s "${file_name_and_extension}" && 
-                test -f "${file_name_and_extension}"
+            while [[ -e "${file_name_and_extension}" && -s "${file_name_and_extension}" && -f "${file_name_and_extension}" ]]
             do
-                let "file_number=file_number+1"
-                file_name_and_extension="${file_name}"-"${file_number}"."${file_extension}"
+                ((++file_number))
             done
+            
+            file_name_and_extension="${file_name}-${file_number}.${file_extension}"
         fi
 
         echo "
@@ -104,7 +101,7 @@ function generate() {
 }
 
 ######################################################################
-# Generates a random password with the length chose by the user.
+# Generates a random password with the length chosen by the user.
 #
 # Globals:
 #   BLUE
@@ -126,22 +123,21 @@ function generate() {
 function one_password() {
     local one_password=1
 
-    echo -e ""${BLUE}"[!] Password length must be in this range : [ "${ARGUMENTS_PASSWORD_MIN_LENGTH}" ; "${ARGUMENTS_PASSWORD_MAX_LENGTH}" ]"${NC}""
+    echo -e "${BLUE}[!] Password length must be in this range : [ ${ARGUMENTS_PASSWORD_MIN_LENGTH} ; ${ARGUMENTS_PASSWORD_MAX_LENGTH} ]${NC}"
 
     local password_length=""
 
     while ! [[ "${password_length}" =~ ^[0-9]+$ ]] || 
-        test "${password_length}" -lt "${ARGUMENTS_PASSWORD_MIN_LENGTH}" ||
-        test "${password_length}" -gt "${ARGUMENTS_PASSWORD_MAX_LENGTH}"
+          [[ "${password_length}" -lt "${ARGUMENTS_PASSWORD_MIN_LENGTH}" ]] || 
+          [[ "${password_length}" -gt "${ARGUMENTS_PASSWORD_MAX_LENGTH}" ]]
     do
         read -p "Enter a length for your password : " password_length 
     done
 
-    while test "${one_password}" -eq 1
-    do
+    while [[ "${one_password}" -eq 1 ]]; do
         local password=$(< /dev/urandom tr -dc "${ALL_CHARACTERS}" | head -c "${password_length}" | tr -d '\n')
         
-        if test $(echo "${password}" | grep "${ALL_CHARACTERS_REGEX}")
+        if echo "${password}" | grep -q "${ALL_CHARACTERS_REGEX}"
         then
             echo -e ""${GREEN}"Password generated !"${NC}""
             echo -e "${password}"
@@ -167,12 +163,12 @@ function one_password() {
 function grant_permissions() {
     chmod 700 "${file}"
 
-    echo -e "\n"${GREEN}""${file}" is now readable and editable only by you."${NC}""
+    echo -e "\n${GREEN}${file} is now readable and editable only by you.${NC}"
 }
 
 ######################################################################
-# Generates multiple random passwords with the length chose by the
-# user and store them into .csv file.
+# Generates multiple random passwords with the length chosen by the
+# user and stores them in a .csv file.
 #
 # Globals:
 #   BLUE
@@ -198,8 +194,8 @@ function multiple_passwords() {
     local password_length=""
 
     while ! [[ "${password_length}" =~ ^[0-9]+$ ]] || 
-        test "${password_length}" -lt "${ARGUMENTS_PASSWORD_MIN_LENGTH}" ||
-        test "${password_length}" -gt "${ARGUMENTS_PASSWORD_MAX_LENGTH}"
+          [[ "${password_length}" -lt "${ARGUMENTS_PASSWORD_MIN_LENGTH}" ]] || 
+          [[ "${password_length}" -gt "${ARGUMENTS_PASSWORD_MAX_LENGTH}" ]]
     do
         read -p "Enter a length for your passwords : " password_length 
     done
@@ -209,22 +205,22 @@ function multiple_passwords() {
     local number_passwords_generated=0
     local passwords_generated=()
 
-    while test "${number_passwords_generated}" -lt "${ARGUMENTS_PASSWORD_NUMBER}"
+    while [[ "${number_passwords_generated}" -lt "${ARGUMENTS_PASSWORD_NUMBER}" ]]
     do
         local password=$(< /dev/urandom tr -dc "${ALL_CHARACTERS}" | head -c "${password_length}" | tr -d '\n')
 
-        # check if the password doesn't have the minimal requirements or if the password is a duplicate
-        while ! test $(echo "${password}" | grep "${ALL_CHARACTERS_REGEX}") || [[ "${passwords_generated[@]}" =~ "${password}" ]]
+        # check if the password meets minimal requirements and is unique
+        while ! echo "${password}" | grep -q "${ALL_CHARACTERS_REGEX}" || [[ " ${passwords_generated[@]} " =~ " ${password} " ]]
         do
             local password=$(< /dev/urandom tr -dc "${ALL_CHARACTERS}" | head -c "${password_length}" | tr -d '\n')
         done
 
-        passwords_generated+=($password)
-        echo -e "${password}" | tr " " " " >> "${file}"
-        let "number_passwords_generated=number_passwords_generated+1"
+        passwords_generated+=("${password}")
+        echo -e "${password}" >> "${file}"
+        ((++number_passwords_generated))
     done
     
-    echo -e ""${GREEN}""${file}" file has been generated successfully !"
+    echo -e "${GREEN}${file} file has been generated successfully!"
 
     grant_permissions
 }
@@ -244,9 +240,9 @@ function multiple_passwords() {
 function help_user() {
     echo "password-generator {
     -g
-        • generate a random password with the length ∈ [ 8 ; 100 ] chose by the user
+        • generate a random password with the length ∈ [ 8 ; 100 ] chosen by the user
     -g <number_passwords_to_generate>
-        • generate multiple random passwords with the desired number ∈ [ 2 ; 150 ] and the length ∈ [ 8 ; 100 ] chose by the user
+        • generate multiple random passwords with the desired number ∈ [ 2 ; 150 ] and the length ∈ [ 8 ; 100 ] chosen by the user
     -h
         • help 
     }"
@@ -255,7 +251,7 @@ function help_user() {
 ######################################################################
 # Main program
 ######################################################################
-if test "${#}" -eq 0 
+if [[ "${#}" -eq 0 ]]
 then 
     help_user
 else 
