@@ -37,10 +37,10 @@ BLUE='\033[0;34m'
 #   ARGUMENTS_PASSWORD_MIN_NUMBER
 #   ARGUMENTS_PASSWORD_MAX_NUMBER
 # Locals:
-#   file_name
-#   file_extension
-#   file_name_and_extension
-#   file_number
+#   file_name: The base name for the generated password file.
+#   file_extension: The extension for the generated password file.
+#   file_name_and_extension: The full name of the generated password file.
+#   file_number: A counter to ensure unique filenames if duplicates exist.
 # Arguments:
 #   -g
 #   -g <numberPasswordsToGenerate>
@@ -52,11 +52,11 @@ function generate() {
     if [[ "${ARGUMENTS_PASSWORD_GENERATE}" = "-g" && "${ARGUMENTS_NUMBER}" -eq 1 ]]
     then
         echo "
-        -----------------------------------
-        |                                 |
-        |     ONE random password mode    |
-        |                                 |
-        -----------------------------------
+        ╔══════════════════════════════════╗
+        ║                                  ║
+        ║     ONE random password mode     ║
+        ║                                  ║
+        ╚══════════════════════════════════╝
         "
         one_password
     elif [[ "${ARGUMENTS_PASSWORD_NUMBER}" -ge "${ARGUMENTS_PASSWORD_MIN_NUMBER}" ]] && 
@@ -87,11 +87,11 @@ function generate() {
         fi
 
         echo "
-        -----------------------------------------
-        |                                       |
-        |     MULTIPLE random passwords mode    |
-        |                                       |
-        -----------------------------------------
+        ╔════════════════════════════════════════╗
+        ║                                        ║
+        ║     MULTIPLE random passwords mode     ║
+        ║                                        ║
+        ╚════════════════════════════════════════╝
         "
 
         multiple_passwords
@@ -112,9 +112,9 @@ function generate() {
 #   ARGUMENTS_PASSWORD_MIN_LENGTH
 #   ARGUMENTS_PASSWORD_MAX_LENGTH
 # Locals:
-#   one_password
-#   password_length
-#   password
+#   one_password: Flag to control the password generation loop.
+#   password_length: The length of the password to generate.
+#   password: The generated password.
 # Argument:
 #   -g
 # Outputs:
@@ -153,7 +153,7 @@ function one_password() {
 #   GREEN
 #   NC
 # Locals:
-#   file
+#   file: The file path to which permissions are granted.
 # Arguments:
 #   None
 # Outputs:
@@ -179,9 +179,10 @@ function grant_permissions() {
 #   ARGUMENTS_PASSWORD_MIN_LENGTH
 #   ARGUMENTS_PASSWORD_MAX_LENGTH
 # Locals:
-#   one_password
-#   password_length
-#   password
+#   password_length: The length of the passwords to generate.
+#   file: The file path where passwords are stored.
+#   number_passwords_generated: Counter for the number of passwords generated.
+#   passwords_generated: Array to store generated passwords.
 # Argument:
 #   -g
 # Outputs:

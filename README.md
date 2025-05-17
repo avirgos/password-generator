@@ -8,7 +8,7 @@ In the multiple random passwords mode, passwords generated are stored in a prote
 
 The password must contain, at least, one uppercase letter, one lowercase letter, one number and one special character.
 
-- If you don't know a specific length for your future password, 15 is recommended to have a strong and complex password.
+- If you don't know a specific length for your future password, **15** is recommended to have a strong and complex password.
 
 ## Usage
 
@@ -20,8 +20,6 @@ The password must contain, at least, one uppercase letter, one lowercase letter,
 -h
     • help 
 ```
-
-![password-generator](assets/password-generator.png)
 
 ## References
 
