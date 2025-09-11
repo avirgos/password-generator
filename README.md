@@ -2,7 +2,7 @@
 
 ## Overview
 
-Script which generates one or multiple random passwords.
+Bash script to generate one or multiple random passwords.
 
 In the multiple random passwords mode, passwords generated are stored in a protected ```.csv``` file readable and writable only by you.
 
