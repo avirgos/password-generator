@@ -110,7 +110,7 @@ function generate() {
 function one_password() {
     local one_password=1
 
-    echo -e "${BLUE}[!] Password length must be in this range : [ ${ARGUMENTS_PASSWORD_MIN_LENGTH} ; ${ARGUMENTS_PASSWORD_MAX_LENGTH} ]${NC}"
+    echo -e ""${BLUE}"[!] Password length must be in this range: [ "${ARGUMENTS_PASSWORD_MIN_LENGTH}" ; "${ARGUMENTS_PASSWORD_MAX_LENGTH}" ]"${NC}""
 
     local password_length=""
 
@@ -118,7 +118,7 @@ function one_password() {
           [[ "${password_length}" -lt "${ARGUMENTS_PASSWORD_MIN_LENGTH}" ]] || 
           [[ "${password_length}" -gt "${ARGUMENTS_PASSWORD_MAX_LENGTH}" ]]
     do
-        read -p "Enter a length for your password : " password_length 
+        read -p "Enter a length for your password: " password_length 
     done
 
     while [[ "${one_password}" -eq 1 ]]; do
@@ -126,7 +126,7 @@ function one_password() {
         
         if echo "${password}" | grep -q "${ALL_CHARACTERS_REGEX}"
         then
-            echo -e ""${GREEN}"Password generated !"${NC}""
+            echo -e ""${GREEN}"Password generated!"${NC}""
             echo -e "${password}"
             one_password=0
         fi 
@@ -165,7 +165,7 @@ function grant_permissions() {
 #   None
 ######################################################################
 function multiple_passwords() {
-    echo -e ""${BLUE}"[!] Password length must be in this range : [ "${ARGUMENTS_PASSWORD_MIN_LENGTH}" ; "${ARGUMENTS_PASSWORD_MAX_LENGTH}" ]"${NC}""
+    echo -e ""${BLUE}"[!] Password length must be in this range: [ "${ARGUMENTS_PASSWORD_MIN_LENGTH}" ; "${ARGUMENTS_PASSWORD_MAX_LENGTH}" ]"${NC}""
 
     local password_length=""
 
@@ -173,7 +173,7 @@ function multiple_passwords() {
           [[ "${password_length}" -lt "${ARGUMENTS_PASSWORD_MIN_LENGTH}" ]] || 
           [[ "${password_length}" -gt "${ARGUMENTS_PASSWORD_MAX_LENGTH}" ]]
     do
-        read -p "Enter a length for your passwords : " password_length 
+        read -p "Enter a length for your passwords: " password_length 
     done
 
     local file="${file_directory}"/"${file_name_and_extension}"
@@ -196,7 +196,7 @@ function multiple_passwords() {
         ((++number_passwords_generated))
     done
     
-    echo -e "${GREEN}${file} file has been generated successfully!"
+    echo -e ""${GREEN}""${file}" file has been generated successfully!"
 
     grant_permissions
 }
