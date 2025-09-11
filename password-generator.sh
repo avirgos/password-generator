@@ -31,22 +31,15 @@ BLUE='\033[0;34m'
 # Generates one password or multiple passwords.
 #
 # Globals:
-#   ARGUMENTS_PASSWORD_GENERATE
-#   ARGUMENTS_PASSWORD_NUMBER
-#   ARGUMENTS_NUMBER
-#   ARGUMENTS_PASSWORD_MIN_NUMBER
-#   ARGUMENTS_PASSWORD_MAX_NUMBER
+#   ARGUMENTS_PASSWORD_GENERATE, ARGUMENTS_PASSWORD_NUMBER, ARGUMENTS_NUMBER,
+#   ARGUMENTS_PASSWORD_MIN_NUMBER, ARGUMENTS_PASSWORD_MAX_NUMBER
 # Locals:
-#   file_name: The base name for the generated password file.
-#   file_extension: The extension for the generated password file.
-#   file_name_and_extension: The full name of the generated password file.
-#   file_number: A counter to ensure unique filenames if duplicates exist.
+#   file_name, file_extension, file_name_and_extension, file_number
 # Arguments:
 #   -g
 #   -g <numberPasswordsToGenerate>
-# Outputs:
-#   Prints, on the standard output, instructions about the 
-#   mode selected.
+# Returns:
+#   None
 ######################################################################
 function generate() {
     if [[ "${ARGUMENTS_PASSWORD_GENERATE}" = "-g" && "${ARGUMENTS_NUMBER}" -eq 1 ]]
@@ -104,21 +97,15 @@ function generate() {
 # Generates a random password with the length chosen by the user.
 #
 # Globals:
-#   BLUE
-#   NC
-#   GREEN
+#   BLUE, NC, GREEN
 #
-#   ALL_CHARACTERS
-#   ARGUMENTS_PASSWORD_MIN_LENGTH
-#   ARGUMENTS_PASSWORD_MAX_LENGTH
+#   ALL_CHARACTERS, ARGUMENTS_PASSWORD_MIN_LENGTH, ARGUMENTS_PASSWORD_MAX_LENGTH
 # Locals:
-#   one_password: Flag to control the password generation loop.
-#   password_length: The length of the password to generate.
-#   password: The generated password.
+#   one_password, password_length, password
 # Argument:
 #   -g
-# Outputs:
-#   Prints, on the standard output, the password generated.
+# Returns:
+#   None
 ######################################################################
 function one_password() {
     local one_password=1
@@ -150,44 +137,32 @@ function one_password() {
 # Grants permissions on the random passwords file generated.
 #
 # Globals:
-#   GREEN
-#   NC
+#   GREEN, NC
 # Locals:
-#   file: The file path to which permissions are granted.
-# Arguments:
+#   file
+# Returns:
 #   None
-# Outputs:
-#   Prints, on the standard output, a message that the permissions 
-#   are granted to the file.
 ######################################################################
 function grant_permissions() {
     chmod 700 "${file}"
 
-    echo -e "\n${GREEN}${file} is now readable and editable only by you.${NC}"
+    echo -e "\n"${GREEN}""${file}" is now readable and editable only by you."${NC}""
 }
 
 ######################################################################
 # Generates multiple random passwords with the length chosen by the
-# user and stores them in a .csv file.
+# user and stores them in a `.csv` file.
 #
 # Globals:
-#   BLUE
-#   NC
-#   GREEN
+#   BLUE, NC, GREEN
 #
-#   ALL_CHARACTERS
-#   ARGUMENTS_PASSWORD_MIN_LENGTH
-#   ARGUMENTS_PASSWORD_MAX_LENGTH
+#   ALL_CHARACTERS, ARGUMENTS_PASSWORD_MIN_LENGTH, ARGUMENTS_PASSWORD_MAX_LENGTH
 # Locals:
-#   password_length: The length of the passwords to generate.
-#   file: The file path where passwords are stored.
-#   number_passwords_generated: Counter for the number of passwords generated.
-#   passwords_generated: Array to store generated passwords.
+#   password_length, file, number_passwords_generated, passwords_generated
 # Argument:
 #   -g
-# Outputs:
-#   Prints, on the standard output, the name of the file 
-#   containing the passwords.
+# Returns:
+#   None
 ######################################################################
 function multiple_passwords() {
     echo -e ""${BLUE}"[!] Password length must be in this range : [ "${ARGUMENTS_PASSWORD_MIN_LENGTH}" ; "${ARGUMENTS_PASSWORD_MAX_LENGTH}" ]"${NC}""
@@ -229,14 +204,10 @@ function multiple_passwords() {
 ######################################################################
 # Displays instructions on using the script.
 #
-# Globals:
-#   None
-# Locals:
-#   None
 # Argument:
 #   -h
-# Outputs:
-#   Prints, on the standard output, usage instructions for the script.
+# Returns:
+#   None
 ######################################################################
 function help_user() {
     echo "password-generator {
