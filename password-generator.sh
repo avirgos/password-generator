@@ -9,7 +9,7 @@ set -o nounset  # Exit if variable not set.
 IFS=$'\n\t'     # Remove the initial space and instead use '\n'.
 
 ######################################################################
-# Global variables
+# Global variables (internal)
 ######################################################################
 ARGUMENTS_PASSWORD_GENERATE=$(echo "${@}" | cut -d ' ' -f1)
 ARGUMENTS_PASSWORD_NUMBER=$(echo "${@}" | cut -d ' ' -f2)
