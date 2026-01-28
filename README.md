@@ -4,7 +4,7 @@
 
 Bash script to generate one or multiple random passwords.
 
-In the multiple random passwords mode, passwords generated are stored in a protected ```.csv``` file readable and writable only by you.
+In the multiple random passwords mode, passwords generated are stored in a protected `.csv` file readable and writable only by you.
 
 The password must contain, at least, one uppercase letter, one lowercase letter, one number and one special character.
 
@@ -12,7 +12,7 @@ The password must contain, at least, one uppercase letter, one lowercase letter,
 
 ## Usage
 
-```
+```bash
 -g
     • generate a random password with the length ∈ [ 8 ; 100 ] chose by the user
 -g <number_passwords_to_generate>
