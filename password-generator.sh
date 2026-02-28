@@ -55,20 +55,20 @@ function generate() {
     elif [[ "${ARGUMENTS_PASSWORD_NUMBER}" -ge "${ARGUMENTS_PASSWORD_MIN_NUMBER}" ]] && 
          [[ "${ARGUMENTS_PASSWORD_NUMBER}" -le "${ARGUMENTS_PASSWORD_MAX_NUMBER}" ]]
     then
-        # file parameters
+        # File parameters
         local file_name=generated-"$(date +%F)"
         local file_extension="csv"
         local file_directory="passwords-generated"
         local file_name_and_extension="${file_name}"."${file_extension}"
         local file_number=1
 
-        # create the directory to store random passwords files generated
+        # Create the directory to store random passwords files generated
         if [[ ! -e "${file_directory}" ]]
         then
             mkdir "${file_directory}"
         fi
 
-        # create random passwords file
+        # Create random passwords file
         if [[ -e "${file_name_and_extension}" || -s "${file_name_and_extension}" && -f "${file_name_and_extension}" ]]
         then
             while [[ -e "${file_name_and_extension}" && -s "${file_name_and_extension}" && -f "${file_name_and_extension}" ]]
@@ -146,12 +146,12 @@ function one_password() {
 function grant_permissions() {
     chmod 700 "${file}"
 
-    echo -e "\n"${GREEN}""${file}" is now readable and editable only by you."${NC}""
+    echo -e "\n"${GREEN}""${file}" is now readable and editable only by you"${NC}""
 }
 
 ######################################################################
 # Generates multiple random passwords with the length chosen by the
-# user and stores them in a `.csv` file.
+# user and stores them in a '.csv' file.
 #
 # Globals:
 #   BLUE, NC, GREEN
@@ -185,7 +185,7 @@ function multiple_passwords() {
     do
         local password=$(< /dev/urandom tr -dc "${ALL_CHARACTERS}" | head -c "${password_length}" | tr -d '\n')
 
-        # check if the password meets minimal requirements and is unique
+        # Check if the password meets minimal requirements and is unique
         while ! echo "${password}" | grep -q "${ALL_CHARACTERS_REGEX}" || [[ " ${passwords_generated[@]} " =~ " ${password} " ]]
         do
             local password=$(< /dev/urandom tr -dc "${ALL_CHARACTERS}" | head -c "${password_length}" | tr -d '\n')
@@ -212,11 +212,13 @@ function multiple_passwords() {
 function help_user() {
     echo "password-generator {
     -g
-        • generate a random password with the length ∈ [ 8 ; 100 ] chosen by the user
+        Generate a random password with the length ∈ [ 8 ; 100 ] chosen by the user
+    
     -g <number_passwords_to_generate>
-        • generate multiple random passwords with the desired number ∈ [ 2 ; 150 ] and the length ∈ [ 8 ; 100 ] chosen by the user
+        Generate multiple random passwords with the desired number ∈ [ 2 ; 150 ] and the length ∈ [ 8 ; 100 ] chosen by the user
+    
     -h
-        • help 
+        Help 
     }"
 }
 
@@ -229,7 +231,7 @@ then
 else 
     case "${1}" in
         -g)
-            echo -e ""${BLUE}"[!] For multiple random passwords mode, the desired number must be in this range : [ "${ARGUMENTS_PASSWORD_MIN_NUMBER}" ; "${ARGUMENTS_PASSWORD_MAX_NUMBER}" ]"${NC}""
+            echo -e ""${BLUE}"[!] For multiple random passwords mode, the desired number must be in this range: [ "${ARGUMENTS_PASSWORD_MIN_NUMBER}" ; "${ARGUMENTS_PASSWORD_MAX_NUMBER}" ]"${NC}""
             generate ;;
         -h)
             help_user ;;

@@ -14,11 +14,13 @@ The password must contain, at least, one uppercase letter, one lowercase letter,
 
 ```bash
 -g
-    • generate a random password with the length ∈ [ 8 ; 100 ] chose by the user
+    Generate a random password with the length ∈ [ 8 ; 100 ] chosen by the user
+
 -g <number_passwords_to_generate>
-    • generate multiple random passwords with the desired number ∈ [ 2 ; 150 ] and the length ∈ [ 8 ; 100 ] chose by the user
+    Generate multiple random passwords with the desired number ∈ [ 2 ; 150 ] and the length ∈ [ 8 ; 100 ] chosen by the user
+
 -h
-    • help 
+    Help
 ```
 
 ## References
